@@ -618,6 +618,14 @@ hr.div { border:none; border-top:1px solid var(--border); margin:22px 0; }
         document.querySelectorAll('#' + gridId + ' .cc').forEach(function(c) { c.classList.remove('sel'); });
         card.classList.add('sel');
         D[key] = card.getAttribute('data-val');
+        if (key === 'role') {
+          var nameEl = card.querySelector('.cc-name');
+          D.roleLabel = nameEl ? nameEl.textContent.trim() : D[key];
+        }
+        if (key === 'type') {
+          var nameEl2 = card.querySelector('.cc-name');
+          D.typeLabel = nameEl2 ? nameEl2.textContent.trim() : D[key];
+        }
         se(errId, false);
       });
     });
@@ -724,10 +732,10 @@ hr.div { border:none; border-top:1px solid var(--border); margin:22px 0; }
     if (D.name)  params.set('name',  D.name);
     if (D.phone) params.set('phone', D.phone);
     if (D.tg)    params.set('tg',    D.tg);
-    if (D.role)  params.set('role',  D.role);
-    if (D.revLabel) params.set('rev', D.revLabel); else if (D.rev) params.set('rev', D.rev);
-    if (D.city)  params.set('city',  D.city);
-    if (D.type)  params.set('type',  D.type);
+    if (D.roleLabel) params.set('role', D.roleLabel); else if (D.role) params.set('role', D.role);
+    if (D.revLabel)  params.set('rev',  D.revLabel); else if (D.rev) params.set('rev', String(D.rev));
+    if (D.city)      params.set('city', D.city);
+    if (D.typeLabel) params.set('type', D.typeLabel); else if (D.type) params.set('type', D.type);
     window.open('beauty-manifest-anketa.html?' + params.toString(), '_blank');
   });
 
@@ -754,7 +762,7 @@ hr.div { border:none; border-top:1px solid var(--border); margin:22px 0; }
         name:     D.name,
         phone:    D.phone,
         telegram: D.tg,
-        role:     D.role,
+        role:     D.roleLabel || D.role,
         revenue:  revText
       };
       postData(lead);
@@ -768,7 +776,7 @@ hr.div { border:none; border-top:1px solid var(--border); margin:22px 0; }
         source:          'calc_data',
         phone:           D.phone,
         city:            D.city,
-        salon_type:      D.type,
+        salon_type:      D.typeLabel || D.type,
         revenue:         revText,
         admins:          D.admins,
         current_salary:  D.curSalary,
