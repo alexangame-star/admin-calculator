@@ -631,6 +631,7 @@ hr.div { border:none; border-top:1px solid var(--border); margin:22px 0; }
       document.querySelectorAll('.ro').forEach(function(o) { o.classList.remove('sel'); });
       opt.classList.add('sel');
       D.rev = parseFloat(opt.getAttribute('data-mid'));
+      D.revLabel = opt.querySelector('.ro-r') ? opt.querySelector('.ro-r').textContent.trim() : '';
       se('revErr', false);
     });
   });
@@ -724,7 +725,7 @@ hr.div { border:none; border-top:1px solid var(--border); margin:22px 0; }
     if (D.phone) params.set('phone', D.phone);
     if (D.tg)    params.set('tg',    D.tg);
     if (D.role)  params.set('role',  D.role);
-    if (D.rev)   params.set('rev',   D.rev);
+    if (D.revLabel) params.set('rev', D.revLabel); else if (D.rev) params.set('rev', D.rev);
     if (D.city)  params.set('city',  D.city);
     if (D.type)  params.set('type',  D.type);
     window.open('beauty-manifest-anketa.html?' + params.toString(), '_blank');
@@ -745,35 +746,37 @@ hr.div { border:none; border-top:1px solid var(--border); margin:22px 0; }
 
   function trySend() {
     try {
+      var revText = D.revLabel || (D.rev ? D.rev.toLocaleString('uk-UA') + ' грн' : '—');
+
       // 1. Лід → лист "Заявки" + Telegram
       var lead = {
-        source:   'Калькулятор ЗП адміністратора',
+        source:   'Калькулятор ЗП адміна',
         name:     D.name,
         phone:    D.phone,
         telegram: D.tg,
         role:     D.role,
-        revenue:  D.rev ? D.rev.toLocaleString('uk-UA') + ' грн' : '—'
+        revenue:  revText
       };
       postData(lead);
 
-      // 2. Технічні дані → лист "Калькулятор"
-      var convBook = D.inq > 0 ? Math.round(D.book / D.inq * 100) + '%' : '—';
+      // 2. Технічні дані → лист "Калькулятор" (окремий запит через 300мс щоб не конфліктував)
+      var convBook  = D.inq > 0  ? Math.round(D.book    / D.inq  * 100) + '%' : '—';
       var convVisit = D.book > 0 ? Math.round(D.visited / D.book * 100) + '%' : '—';
-      var funcs = D.extraFuncs.map(function(f){ return f.val; }).join(', ') || '—';
+      var funcs     = D.extraFuncs.map(function(f){ return f.val; }).join(', ') || '—';
 
       var calcData = {
         source:          'calc_data',
         phone:           D.phone,
         city:            D.city,
         salon_type:      D.type,
-        revenue:         D.rev ? D.rev.toLocaleString('uk-UA') + ' грн' : '—',
+        revenue:         revText,
         admins:          D.admins,
         current_salary:  D.curSalary,
         conv_booking:    convBook,
         conv_visit:      convVisit,
         extra_functions: funcs
       };
-      postData(calcData);
+      setTimeout(function(){ postData(calcData); }, 400);
     } catch(e) {}
   }
 
