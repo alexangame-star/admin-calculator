@@ -196,30 +196,24 @@ html,body{background:var(--navy);color:var(--text);font-family:"Jost",sans-serif
     <div class="vc-badge">🎁 Ваш бонус вже готовий</div>
     <div class="vc-title">Урок: <em>Як працювати з клієнтом у 2026 році</em></div>
     <div class="vc-desc">Поки команда готується до дзвінка — подивіться урок. Конкретні інструменти вже сьогодні.</div>
-    <a href="https://alexangame-star.github.io/beauty-sales-2026/"
-       onclick="openLink('https://alexangame-star.github.io/beauty-sales-2026/'); return false;"
-       class="btn-video">▶ Дивитись урок зараз</a>
+    <a href="https://alexangame-star.github.io/beauty-sales-2026/" class="btn-video">▶ Дивитись урок зараз</a>
   </div>
 
   <div class="social-block">
     <p class="soc-title">Щоб не пропустити анонс старту — підпишіться:</p>
     <div class="soc-btns">
-      <a href="https://t.me/+Ut8nz1lwP8A3OGUy"
-         onclick="openLink('https://t.me/+Ut8nz1lwP8A3OGUy'); return false;"
-         class="soc-btn tg">
+      <a href="https://t.me/+Ut8nz1lwP8A3OGUy" class="soc-btn tg">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8l-1.68 7.93c-.12.56-.46.7-.93.43l-2.57-1.89-1.24 1.19c-.14.14-.26.26-.53.26l.19-2.67 4.85-4.38c.21-.19-.05-.29-.32-.1L8.26 14.5l-2.49-.78c-.54-.17-.55-.54.11-.8l9.72-3.75c.45-.16.84.11.64.63z" fill="#29A8E0"/>
         </svg>
         Telegram
       </a>
-      <a href="https://www.instagram.com/blyznyuk.viktoriya?igsh=MTY4bnF5aGp6YndwMg=="
-         onclick="openLink('https://www.instagram.com/blyznyuk.viktoriya?igsh=MTY4bnF5aGp6YndwMg=='); return false;"
-         class="soc-btn ig">
+      <a href="https://www.instagram.com/blyznyuk.viktoriya" class="soc-btn ig">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <rect x="2" y="2" width="20" height="20" rx="6" stroke="url(#ig)" stroke-width="1.8" fill="none"/>
-          <circle cx="12" cy="12" r="4.5" stroke="url(#ig)" stroke-width="1.8" fill="none"/>
+          <rect x="2" y="2" width="20" height="20" rx="6" stroke="url(#ig2)" stroke-width="1.8" fill="none"/>
+          <circle cx="12" cy="12" r="4.5" stroke="url(#ig2)" stroke-width="1.8" fill="none"/>
           <circle cx="17.5" cy="6.5" r="1.2" fill="#E1306C"/>
-          <defs><linearGradient id="ig" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#F9A825"/><stop offset="50%" stop-color="#E1306C"/><stop offset="100%" stop-color="#833AB4"/></linearGradient></defs>
+          <defs><linearGradient id="ig2" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#F9A825"/><stop offset="50%" stop-color="#E1306C"/><stop offset="100%" stop-color="#833AB4"/></linearGradient></defs>
         </svg>
         Instagram
       </a>
@@ -269,9 +263,9 @@ html,body{background:var(--navy);color:var(--text);font-family:"Jost",sans-serif
   };
 
   document.getElementById('kCity').textContent    = pCity  || '—';
-  document.getElementById('kRole').textContent    = roleMap[pRole] || pRole || '—';
-  document.getElementById('kRevenue').textContent = pRev   ? pRev + ' грн' : '—';
-  document.getElementById('kType').textContent    = typeMap[pType] || pType || '—';
+  document.getElementById('kRole').textContent    = pRole || '—';
+  document.getElementById('kRevenue').textContent = pRev || '—';
+  document.getElementById('kType').textContent    = pType || '—';
 
   // Ховаємо блок якщо нічого немає
   if (!pCity && !pRole && !pRev && !pType) {
@@ -315,8 +309,8 @@ html,body{background:var(--navy);color:var(--text);font-family:"Jost",sans-serif
       name:       name,
       phone:      phone,
       telegram:   tg,
-      role:       roleMap[pRole] || pRole || '—',
-      revenue:    pRev ? pRev + ' грн' : '—',
+      role:       pRole || '—',
+      revenue:    pRev || '—',
       experience: sel.exp,
       pain:       sel.pain,
       how_found:  src || '—'
@@ -342,24 +336,6 @@ html,body{background:var(--navy);color:var(--text);font-family:"Jost",sans-serif
 
 })();
 
-// Відкриття посилань — працює в Safari, Chrome, Telegram WebView, Instagram WebView
-function openLink(url) {
-  // Зберігаємо URL в sessionStorage щоб не загубити після переходу
-  try {
-    // Спроба 1: звичайне відкриття в новій вкладці
-    var a = document.createElement('a');
-    a.href = url;
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
-    a.style.display = 'none';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  } catch(e) {
-    // Спроба 2: пряме перенаправлення
-    window.location.href = url;
-  }
-}
 </script>
 </body>
 </html>
