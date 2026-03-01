@@ -725,7 +725,8 @@ hr.div { border:none; border-top:1px solid var(--border); margin:22px 0; }
     if (D.tg)    params.set('tg',    D.tg);
     if (D.role)  params.set('role',  D.role);
     if (D.rev)   params.set('rev',   D.rev);
-    // Відкриваємо анкету Beauty Маніфест з автозаповненням
+    if (D.city)  params.set('city',  D.city);
+    if (D.type)  params.set('type',  D.type);
     window.open('beauty-manifest-anketa.html?' + params.toString(), '_blank');
   });
 
@@ -778,11 +779,20 @@ hr.div { border:none; border-top:1px solid var(--border); margin:22px 0; }
 
   function postData(payload) {
     try {
-      var x = new XMLHttpRequest();
-      x.open('POST', SCRIPT_URL, true);
-      x.setRequestHeader('Content-Type', 'application/json');
-      x.send(JSON.stringify(payload));
-    } catch(e) {}
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(payload)
+      }).catch(function(){});
+    } catch(e) {
+      // fallback XHR
+      try {
+        var x = new XMLHttpRequest();
+        x.open('POST', SCRIPT_URL, true);
+        x.send(JSON.stringify(payload));
+      } catch(e2) {}
+    }
   }
 
   // ========== MAIN CALCULATION ==========
