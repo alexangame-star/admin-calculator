@@ -121,7 +121,7 @@ html,body{background:var(--navy);color:var(--text);font-family:"Jost",sans-serif
   <!-- КОНТАКТИ -->
   <div class="new-block">
     <div class="new-label">Крок 1 — Ваші контакти</div>
-    <div class="new-sub">Ми не надсилаємо спам. Тільки результат і корисне для бізнесу.</div>
+    <div class="new-sub">Перевірте ваші дані — щоб ми точно змогли з вами зв'язатись.</div>
 
     <div class="field">
       <label>Імʼя</label>
@@ -342,15 +342,21 @@ html,body{background:var(--navy);color:var(--text);font-family:"Jost",sans-serif
 
 })();
 
-// Відкриття посилань — працює і в WebView (Telegram/Instagram)
+// Відкриття посилань — працює в Safari, Chrome, Telegram WebView, Instagram WebView
 function openLink(url) {
+  // Зберігаємо URL в sessionStorage щоб не загубити після переходу
   try {
-    var w = window.open(url, '_blank');
-    if (!w || w.closed || typeof w.closed === 'undefined') {
-      // WebView заблокував popup — переходимо в поточній вкладці
-      window.location.href = url;
-    }
+    // Спроба 1: звичайне відкриття в новій вкладці
+    var a = document.createElement('a');
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   } catch(e) {
+    // Спроба 2: пряме перенаправлення
     window.location.href = url;
   }
 }
