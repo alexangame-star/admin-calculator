@@ -307,7 +307,7 @@ html,body{background:var(--navy);color:var(--text);font-family:"Jost",sans-serif
 
   var data = {
   // ОЦЕ — те, що має падати і в "Заявки", і в Telegram-бот
-  source:     'Beauty Маніфест анкета (Калькулятор ЗП адміна)',
+  source: new URLSearchParams(window.location.search).get('source') || '—',
 
   name:       name,
   phone:      phone,
