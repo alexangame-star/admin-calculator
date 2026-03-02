@@ -305,17 +305,19 @@ html,body{background:var(--navy);color:var(--text);font-family:"Jost",sans-serif
     btn.disabled = true;
     btn.textContent = 'Надсилаємо…';
 
-    var data = {
-      source:     pTool ? 'Beauty Маніфест анкета (' + pTool + ')' : 'Beauty Маніфест анкета',
-      name:       name,
-      phone:      phone,
-      telegram:   tg,
-      role:       pRole || '—',
-      revenue:    pRev || '—',
-      experience: sel.exp,
-      pain:       sel.pain,
-      how_found:  src || '—'
-    };
+  var data = {
+  // ОЦЕ — те, що має падати і в "Заявки", і в Telegram-бот
+  source:     'Beauty Маніфест анкета (Калькулятор ЗП адміна)',
+
+  name:       name,
+  phone:      phone,
+  telegram:   tg,
+  role:       pRole || '—',
+  revenue:    pRev || '—',
+  experience: sel.exp,
+  pain:       sel.pain,
+  how_found:  src || '—'
+};
 
     fetch(SCRIPT_URL, {
       method: 'POST',
